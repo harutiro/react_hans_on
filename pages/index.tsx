@@ -1,10 +1,50 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
-const text = "I have a pen"
-const flag = true
+const text = "I have a pen";
+const flag = true;
+
+//必須のプロパティを指定する
+//？がつくと必須ではなくなる
+interface TestComponentProps {
+  before: String;
+  after?: String;
+}
+
+// コンポーネントを書く
+// 自作タグを作成できる！！
+// コンポーネントは、大文字から始める！！
+
+//分割代入
+const TestComponent = ({ before, after }: TestComponentProps) => {
+  return (
+    <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
+      {before}, は美味しいです。 {after}
+    </p>
+  );
+};
+
+//データクラスみたいに使う
+const TestComponent2 = (props: TestComponentProps) => {
+  return (
+    <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
+      {props.before}, おじゃ！ {props.after}
+    </p>
+  );
+};
+
+//コンポーネントの複製
+const data = ["HEY", "YO!", "LFG", "WTF"];
+
+//+++++++分割代入の例+++++++++
+const { aaa, bbb } = {
+  aaa: "aaa",
+  bbb: "bbb",
+};
+
+const [num1, num2] = [1, 2, 3, 4];
 
 const Home: NextPage = () => {
   return (
@@ -16,9 +56,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Hello World
-        </h1>
+        <h1 className={styles.title}>Hello World</h1>
 
         {/* 式の代入等はできない */}
 
@@ -38,8 +76,39 @@ const Home: NextPage = () => {
           {flag && "true"}
         </h2>
 
+        {/* コンポーネント */}
+        {/* プロパティも好きに追加ができる */}
+        <TestComponent before="この世界" after="ラーメンも美味しいです" />
+        <TestComponent2 before="この世界" after="ラーメンも美味しいです" />
+
+        {/* コンポーネントの複製 */}
+        {/* いっぱい複写してくれるお */}
+        <div>
+          {data.map((item) => (
+            <TestComponent key={item} before={item} />
+          ))}
+        </div>
+
+        {/* コールバック */}
+        {/* returnに入れられたものを、再代入してくれる */}
+        {/* data.map(e => {return (e + 1)}) */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
@@ -80,14 +149,14 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
