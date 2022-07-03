@@ -49,12 +49,12 @@ const TestComponent2 = (props: TestComponentProps) => {
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-interface HeddingProps {
+interface HeadingProps {
   fontSize: number;
   children?: React.ReactNode;
 }
 
-const Heading = (props:HeddingProps) => {
+const Heading = (props:HeadingProps) => {
   return (
     <>
       <p
@@ -84,6 +84,61 @@ const { aaa, bbb } = {
 
 const [num1, num2] = [1, 2, 3, 4];
 
+//++++++++++カウントダウンアプリ++++++++++++++++++++++++++++++++++++++++++++
+
+const CountDownComponent = () => {
+
+  //変更が起きたときに、再レンダリングを発生させる。
+  const [count, setCount] = React.useState(0);
+
+  return(
+    <div>
+      <button onClick={() => {
+        setCount(count + 1);
+        console.log(count);
+        
+
+      }}>カウントアップ</button>
+
+      <p>{count}</p>
+    </div>
+    
+  );
+}
+
+// ++++++++++++文字入力をやってみる+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+const InputPractice = () => {
+  // ここになにか書こうね
+  // 非同期処理！！
+  const [text, setText] = React.useState("");
+
+  return (
+    <div>
+      <p>{text}</p>
+      <input
+        type="text"
+        //入力した情報をそのまま流し込んで、次に繋げる
+        value={text}
+        onChange={(event) => {
+          // これが入力したテキスト情報 
+          event.target.value;
+          
+          //入力した情報をセットする
+          setText(event.target.value);
+          console.log(text);
+
+          // event.target.value;は、入力したテキスト情報が入っている
+          // textは若干遅れている。要注意
+
+
+        }}
+      />
+    </div>
+  );
+};
+
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -95,6 +150,10 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
 
+        {/* ヘッダーを作成する 中央寄せになっているので、100%に設定する */}
+        <div style={{width:`100%`}}>
+          <Heading fontSize={40}> 初めてのTypeScript </Heading>
+        </div>
 
         <h1 className={styles.title}>Hello World</h1>
 
@@ -115,6 +174,11 @@ const Home: NextPage = () => {
           {/* 論理演算*/}
           {flag && "true"}
         </h2>
+
+        {/* ヘッダーを作成する 中央寄せになっているので、100%に設定する */}
+        <div style={{width:`100%`}}>
+          <Heading fontSize={40}> コンポーネントの勉強 </Heading>
+        </div>
 
         {/* コンポーネント */}
         {/* プロパティも好きに追加ができる */}
@@ -140,10 +204,20 @@ const Home: NextPage = () => {
 
         {/* ヘッダーを作成する 中央寄せになっているので、100%に設定する */}
         <div style={{width:`100%`}}>
-          <Heading fontSize={40}> こんにちは </Heading>
+          <Heading fontSize={40}> カウントダウンアプリ </Heading>
         </div>
 
-  
+        {/* カウントアプリを作成する */}
+        <CountDownComponent />
+
+
+        {/* ヘッダーを作成する 中央寄せになっているので、100%に設定する */}
+        <div style={{width:`100%`}}>
+          <Heading fontSize={40}> 文字入力をやってみる </Heading>
+        </div>
+
+        <InputPractice />
+
 
         <p className={styles.description}>
           Get started by editing{" "}
