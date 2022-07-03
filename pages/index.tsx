@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import React from "react";
 
 const text = "I have a pen";
 const flag = true;
@@ -11,6 +12,8 @@ const flag = true;
 interface TestComponentProps {
   before: String;
   after?: String;
+  //
+  children?: React.ReactNode;
 }
 
 // コンポーネントを書く
@@ -18,22 +21,57 @@ interface TestComponentProps {
 // コンポーネントは、大文字から始める！！
 
 //分割代入
-const TestComponent = ({ before, after }: TestComponentProps) => {
+//コンポーネントは、ドムは一つだけしか入れては行けない。-> divで囲む
+const TestComponent = ({ before, after, children }: TestComponentProps) => {
   return (
-    <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
-      {before}, は美味しいです。 {after}
-    </p>
+    <div>
+      <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
+        {before}, は美味しいです。 {after}
+      </p>
+      {children}
+    </div>
   );
 };
 
 //データクラスみたいに使う
+//divを使いたくないので、<></>で囲む
 const TestComponent2 = (props: TestComponentProps) => {
   return (
-    <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
-      {props.before}, おじゃ！ {props.after}
-    </p>
+    <>
+      <p style={{ fontWeight: "bold", color: "green", fontSize: "48px" }}>
+        {props.before}, おじゃ！ {props.after}
+      </p>
+      <p>{props.children}</p>
+    </>
   );
 };
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+interface HeddingProps {
+  fontSize: number;
+  children?: React.ReactNode;
+}
+
+const Heading = (props:HeddingProps) => {
+  return (
+    <>
+      <p
+      style={{
+        fontWeight: "bold",
+        fontSize: `${props.fontSize}px`,
+        borderLeft: "solid 8px #0c7abf",
+        paddingLeft: "8px",
+      }}
+    >
+        {props.children}
+    </p>
+    </>
+  );
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //コンポーネントの複製
 const data = ["HEY", "YO!", "LFG", "WTF"];
@@ -56,6 +94,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+
+
         <h1 className={styles.title}>Hello World</h1>
 
         {/* 式の代入等はできない */}
@@ -78,7 +118,11 @@ const Home: NextPage = () => {
 
         {/* コンポーネント */}
         {/* プロパティも好きに追加ができる */}
-        <TestComponent before="この世界" after="ラーメンも美味しいです" />
+        <TestComponent before="この世界" after="ラーメンも美味しいです" >
+          {/* 子要素 */}
+          <p>{text}</p>
+        </TestComponent>
+
         <TestComponent2 before="この世界" after="ラーメンも美味しいです" />
 
         {/* コンポーネントの複製 */}
@@ -94,18 +138,12 @@ const Home: NextPage = () => {
         {/* data.map(e => {return (e + 1)}) */}
 
 
+        {/* ヘッダーを作成する 中央寄せになっているので、100%に設定する */}
+        <div style={{width:`100%`}}>
+          <Heading fontSize={40}> こんにちは </Heading>
+        </div>
 
-
-
-
-
-
-
-
-
-
-
-        
+  
 
         <p className={styles.description}>
           Get started by editing{" "}
