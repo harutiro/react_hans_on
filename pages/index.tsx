@@ -3,6 +3,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+const text = "I have a pen"
+const flag = true
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -14,8 +17,26 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Hello World
         </h1>
+
+        {/* 式の代入等はできない */}
+
+        <h2>
+          {/*  JSのオブジェクトを代入してくれる */}
+          {/* 変数（オブジェクト）・式がかける */}
+          {text}
+        </h2>
+
+        <h2>
+          {/* 三項演算子 論理演算 */}
+          {flag ? "true" : "false"}
+        </h2>
+
+        <h2>
+          {/* 論理演算*/}
+          {flag && "true"}
+        </h2>
 
         <p className={styles.description}>
           Get started by editing{' '}
